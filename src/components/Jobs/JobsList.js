@@ -2,51 +2,7 @@ import React, { useState } from "react";
 import { Pagination, Form } from "react-bootstrap";
 
 import JobItem from "./JobItem";
-
-const jobData = [
-   {
-      id: 1,
-      title: "Разработчик React",
-      salary: "100000 руб.",
-      description: "Описание вакансии 1",
-   },
-   {
-      id: 2,
-      title: "Разработчик React 2",
-      salary: "100000 руб.",
-      description: "Описание вакансии 2",
-   },
-   {
-      id: 3,
-      title: "Разработчик React 2",
-      salary: "100000 руб.",
-      description: "Описание вакансии 2",
-   },
-   {
-      id: 4,
-      title: "Разработчик React 2",
-      salary: "100000 руб.",
-      description: "Описание вакансии 2",
-   },
-   {
-      id: 5,
-      title: "Разработчик React 2",
-      salary: "100000 руб.",
-      description: "Описание вакансии 2",
-   },
-   {
-      id: 6,
-      title: "Разработчик React 2",
-      salary: "100000 руб.",
-      description: "Описание вакансии 2",
-   },
-   {
-      id: 7,
-      title: "Разработчик React 2",
-      salary: "100000 руб.",
-      description: "Описание вакансии 2",
-   },
-];
+import { jobsData } from "../../consts/jobsFromXML";
 
 const JobList = () => {
    const [currentPage, setCurrentPage] = useState(1);
@@ -58,9 +14,9 @@ const JobList = () => {
    });
 
    // Фильтрация вакансий
-   const filteredJobs = jobData.filter((job) => {
+   const filteredJobs = jobsData.filter((job) => {
       return (
-         job.title
+         job.jobName
             .toLowerCase()
             .includes(filter.title.toLowerCase()) &&
          (!filter.showWithoutSalary || job.salary) &&
@@ -94,12 +50,13 @@ const JobList = () => {
                   type='text'
                   placeholder='Введите название вакансии'
                   value={filter.title}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                     setCurrentPage(1);
                      setFilter({
                         ...filter,
                         title: e.target.value,
-                     })
-                  }
+                     });
+                  }}
                />
             </Form.Group>
 
@@ -111,15 +68,16 @@ const JobList = () => {
                   Размер зарплаты (минимальный)
                </Form.Label>
                <Form.Control
-                  type='text'
+                  type='number'
                   placeholder='Минимальная зарплата'
                   value={filter.minSalary}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                     setCurrentPage(1);
                      setFilter({
                         ...filter,
                         minSalary: e.target.value,
-                     })
-                  }
+                     });
+                  }}
                />
             </Form.Group>
 
@@ -131,18 +89,23 @@ const JobList = () => {
                   type='checkbox'
                   label='Не показывать вакансии без зарплаты'
                   checked={filter.showWithoutSalary}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                     setCurrentPage(1);
                      setFilter({
                         ...filter,
                         showWithoutSalary: e.target.checked,
-                     })
-                  }
+                     });
+                  }}
                />
             </Form.Group>
          </Form>
-         {currentJobs.map((job) => (
-            <JobItem key={job.id} job={job} />
-         ))}
+         {filteredJobs ? (
+            currentJobs.map((job) => (
+               <JobItem key={job.id} job={job} />
+            ))
+         ) : (
+            <p>Таких вакансий нет!</p>
+         )}
          <Pagination>
             {Array.from({
                length: Math.ceil(

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Carousel, Container } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 
 import img1 from "../../assets/Carousel/img1.png";
 import img2 from "../../assets/Carousel/img2.jpg";
@@ -29,7 +29,9 @@ const MyCarousel = () => {
                alt='img1'
             />
             <Carousel.Caption>
-               <h3>Построй карьеру вместе с нами!</h3>
+               <h4 className='text-dark'>
+                  Построй карьеру вместе с нами!
+               </h4>
             </Carousel.Caption>
          </Carousel.Item>
          <Carousel.Item>
@@ -39,7 +41,9 @@ const MyCarousel = () => {
                alt='img1'
             />
             <Carousel.Caption>
-               <h3>Большой выбор вакансий.</h3>
+               <h4 className='text-dark'>
+                  Большой выбор вакансий.
+               </h4>
             </Carousel.Caption>
          </Carousel.Item>
          <Carousel.Item>
@@ -49,10 +53,10 @@ const MyCarousel = () => {
                alt='img1'
             />
             <Carousel.Caption>
-               <h3>
+               <h4 className='text-dark'>
                   Неограниченное количество возможностей для
                   развития
-               </h3>
+               </h4>
             </Carousel.Caption>
          </Carousel.Item>
       </Carousel>

@@ -27,9 +27,11 @@ const JobItem = ({ job }) => {
             <Card.Body>
                <Stack direction='horizontal'>
                   <Stack>
-                     <Card.Title>{job.title}</Card.Title>
+                     <Card.Title>{job.jobName}</Card.Title>
                      <Card.Subtitle className='mb-2 text-muted'>
-                        {job.salary}
+                        {job.salary
+                           ? `${job.salary} ${job.currency}`
+                           : "Не указано"}
                      </Card.Subtitle>
                   </Stack>
 
@@ -43,12 +45,48 @@ const JobItem = ({ job }) => {
             </Card.Body>
          </Card>
 
-         <Modal show={showDetails} onHide={handleClose}>
+         <Modal
+            show={showDetails}
+            onHide={handleClose}
+            size='lg'
+         >
             <Modal.Header closeButton>
-               <Modal.Title>{job.title}</Modal.Title>
+               <Modal.Title>{job.jobName}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-               <p>{job.description}</p>
+               <p className='h4'>
+                  Зарплата:{" "}
+                  {job.salary
+                     ? `${job.salary} ${job.currency}`
+                     : "Не указано"}
+               </p>
+               <p>
+                  <small>
+                     Специализация: {job.industry}
+                  </small>
+               </p>
+               <p>
+                  <small>
+                     Требуемый опыт работы:{" "}
+                     {job.requirement.experience}
+                  </small>
+               </p>
+               <p>
+                  <small>
+                     Образование:{" "}
+                     {job.requirement.education}
+                  </small>
+               </p>
+               <small>
+                  <p>Регион: {job.region}</p>
+               </small>
+               <p>
+                  Описание:
+                  <br />
+                  {job.description}
+               </p>
+
+               <p>Компаня: {job.company.name}</p>
                <Button variant='info' onClick={handleApply}>
                   Откликнуться
                </Button>
